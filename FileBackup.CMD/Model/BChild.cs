@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace FileBackup.CMD.Model
 {
-    public class BFile
+    public class BChild
     {
-        //public string Name { get; set; }
         public string Path { get; set; }
 
-        public BFile(string path)
+        public BChild(string path)
         {
             Path = path;
         }

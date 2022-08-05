@@ -9,7 +9,6 @@ namespace FileBackup.CMD.Model
     [Serializable]
     public class BFolder
     {
-        //public string Name { get; set; }
         public string FolderPath { get; set; }
 
         public BFolder()
@@ -20,15 +19,21 @@ namespace FileBackup.CMD.Model
         public BFolder(string path)
         {
             FolderPath = path;
-            //Name = Path.GetFileName(path);
         }
 
-        public List<BFile> Files()
+        public List<BChild> Files()
         {
-            List<BFile> files = new List<BFile>();
+            List<BChild> childs = new List<BChild>();
+            foreach(var child in Directory.GetDirectories(FolderPath))
+                childs.Add(new BChild(child));
             foreach (var file in Directory.GetFiles(FolderPath))
-                files.Add(new BFile(file));
-            return files;
+                childs.Add(new BChild(file));
+            return childs;
+        }
+
+        public string Name()
+        {
+            return Path.GetFileName(FolderPath);
         }
 
         

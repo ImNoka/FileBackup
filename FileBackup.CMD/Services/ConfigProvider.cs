@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using FileBackup.CMD.Model;
+using System.Text.Json.Serialization;
 
 namespace FileBackup.CMD.Services
 {
@@ -27,7 +28,12 @@ namespace FileBackup.CMD.Services
             _config=new Config();
             using(FileStream fs = new FileStream(jsonPath, FileMode.Open))
             {
-                _config = JsonSerializer.Deserialize<Config>(fs);
+                JsonSerializerOptions options = new JsonSerializerOptions()
+                {
+                    Converters = { new JsonStringEnumConverter() }
+                };
+
+                _config = JsonSerializer.Deserialize<Config>(fs, options);
             }
         }
 
